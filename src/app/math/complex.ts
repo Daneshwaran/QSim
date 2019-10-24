@@ -45,7 +45,7 @@ function Complex(a:IComplexNumber, b:IComplexNumber) {
 	};
 	
 	
-	this.set = function(x){
+	this.set = function(x:IComplexNumber){
 		if (typeof x == "number"){
 			this.re = x;
 			this.im = 0.0;
