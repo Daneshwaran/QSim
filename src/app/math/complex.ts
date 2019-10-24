@@ -1,4 +1,10 @@
-function Complex(a, b) {
+
+interface IComplexNumber {
+    re:number;
+    im:number;
+}
+
+function Complex(a:IComplexNumber, b:IComplexNumber) {
 	
 	this.re = (a instanceof Complex)? a.re : (a ? a : 0.0);
 	this.im = (a instanceof Complex)? a.im : (b ? b : 0.0);
@@ -57,7 +63,7 @@ function Complex(a, b) {
 		return this;
 	}
 	
-	this.add = function(...args) {
+	this.add = function(args:IComplexNumber[]) {
 		for(let arg of args){
 			if (typeof arg === "number") {
 				this.re += arg;
@@ -70,7 +76,7 @@ function Complex(a, b) {
 		return this;
 	}
 
-	this.sub = function(...args) {
+	this.sub = function(args:IComplexNumber[]) {
 		for(let arg of args){
 			if (typeof arg === "number") {
 				this.re -= arg;
@@ -83,7 +89,7 @@ function Complex(a, b) {
 		return this;
 	}
 
-	this.mul = function(...args) {
+	this.mul = function(args:IComplexNumber[]) {
 		for(let arg of args){
 			if (typeof arg === "number") {
 				this.re *= arg;
@@ -99,7 +105,7 @@ function Complex(a, b) {
 		return this;
 	}
 
-	this.div = function(...args) {
+	this.div = function(args:IComplexNumber[]) {
 		for(let arg of args){
 			if (typeof arg === "number") {
 				this.re /= arg;
