@@ -1,23 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import * as p5 from 'p5';
 import "p5/lib/addons/p5.sound";
-// import "p5/lib/addons/p5.dom";
+
 declare var Schroedinger: any;
 
-const CANVAS_WIDTH = 900//1920;
-const CANVAS_HEIGHT = 600//1080;
+const CANVAS_WIDTH = 1500//1920;
+const CANVAS_HEIGHT = 800//1080;
 const FRAME_RATE = 20;
-var width = CANVAS_WIDTH
 
 let settings = {
   size: 1024,
   energy: 3E+4,
-  median: 0.5,
-  sigma: 0.01,
-  timeStep: 1E-6,
-  stepsPerFrame: 20,
-  maxFrames: 1000,
-  potential: x => 2E+4 * Math.pow((4 * x - 1)*(4*x-3), 2),
+  median: 0.2,
+  sigma: 0.05,
+  timeStep: 2.5E-6,
+  stepsPerFrame: 8,
+  maxFrames: 2000,
+  // potential: x => 2E+4 * Math.pow((4 * x - 1), 2),
+  potential: (x) => {
+    if (x >= 0 && x <= .75) {
+      return -1
+    }else if(.75 <= x && x <= 1) {
+      return 5*Math.pow(10,4)
+    
+    }else {
+      return Infinity
+    }
+
+  },
   label: 'Double Well',
   momentumZoom: 4,
   scaleFactor: 1,
@@ -36,33 +46,12 @@ let quantumParticle;
 
 
 export class PropertiesComponent implements OnInit {
-  private p5;
+  private p5: p5;
   constructor() { }
 
   ngOnInit() {
 
-  //   const sketch = (s) => {
-
-  //     s.preload = () => {
-  //       // preload code
-  //     }
-
-  //     s.setup = () => {
-  //       s.frameRate(FRAME_RATE);
-  //       s.createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-  //      settings.underlay = s.createGraphics(CANVAS_WIDTH, CANVAS_HEIGHT);
-  //       s.background(0);
-  //       quantumParticle = new Schroedinger(settings);
-  //     };
-  //     s.draw = () => {
-  //       s.background(255);
-  //       //s.rect(100, 100, 100, 100);
-  //      // var width = CANVAS_WIDTH;
-  //       quantumParticle.simulationStep();
-  //     };
-  //   }
-  //  let canvas = new p5(sketch);
-  this.createCanvas();
+    this.createCanvas();
 
   }
   private createCanvas = () => {
@@ -70,35 +59,16 @@ export class PropertiesComponent implements OnInit {
     this.p5 = new p5(this.drawing);
   }
 
-  private destroyCanvas = () => {
-    console.log('destroying canvas');
-    this.p5.noCanvas();
-  }
   private drawing = function (s: any) {
-
     s.setup = () => {
       s.frameRate(FRAME_RATE);
       s.createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-     settings.underlay = s.createGraphics(CANVAS_WIDTH, CANVAS_HEIGHT);
+      settings.underlay = s.createGraphics(CANVAS_WIDTH, CANVAS_HEIGHT);
       s.background(0);
-     quantumParticle = new Schroedinger(settings,s);
+      quantumParticle = new Schroedinger(settings, s);
     };
     s.draw = () => {
-      s.background(255);
-      s.rect(100, 100, 100, 100);
-     // var width = CANVAS_WIDTH;
-     quantumParticle.simulationStep();
+      quantumParticle.simulationStep();
     };
-
   }
-
-  public test() {
-    //alert("hh")
-   
-  }
-  public draw() {
-    // quantumParticle.simulationStep();
-  }
-
-  
 }

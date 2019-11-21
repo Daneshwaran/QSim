@@ -101,7 +101,6 @@ function Schroedinger(settings,s){
 	this.underlay      = settings.underlay;
 	this.imageFile     = settings.imageFile;
 	this.dataFile      = settings.dataFile;
-	
 	this.xStep         = 1/(this.size - 1);
 	this.pStep         = 2*Math.PI;
 	this.psiX          = new Array(this.size).fill(new Complex());
@@ -128,10 +127,8 @@ function Schroedinger(settings,s){
 		this.computePsiAndV(start, +1);
 		this.computePsiAndV(start, -1);
 		this.updateMomenta();
-		
 		this.computeTridiagonalMatrix();
 		this.initializePlotParameters();
-		
 		this.updateStatistics();
 		this.show();
 		this.frameCount++;
